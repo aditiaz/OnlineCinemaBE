@@ -3,8 +3,8 @@ package models
 type Transaction struct {
 	ID        int                  `json:"id"`
 	Status    string               `json:"status"`
-	AccNumber string               `json:"acc_Number"`
 	OrderDate string               `json:"order_date"`
+	Price     int                  `json:"price"`
 	UserID    int                  `json:"user_id"`
 	User      UsersProfileResponse `json:"user" gorm:"foreignKey:UserID"`
 	FilmID    int                  `json:"film_id"`

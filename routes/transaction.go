@@ -13,7 +13,7 @@ func TransactionRoutes(r *mux.Router) {
 	h := handlers.HandlerTransaction(transactionRepository)
 
 	r.HandleFunc("/createtransaction", h.CreateTransaction).Methods("POST")
-	// r.HandleFunc("/notification", h.Notification).Methods("POST")
+	r.HandleFunc("/notification", h.Notification).Methods("POST")
 	r.HandleFunc("/transactions", h.FindTransactions).Methods("GET")
 	r.HandleFunc("/transaction/{id}", h.GetTransaction).Methods("GET")
 }

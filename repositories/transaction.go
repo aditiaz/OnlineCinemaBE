@@ -43,7 +43,7 @@ func (r *repository) UpdateTransaction(transaction models.Transaction) (models.T
 
 func (r *repository) UpdateTransactionNew(status string, ID string) error {
 	var transaction models.Transaction
-	r.db.Preload("House").Preload("User").First(&transaction, ID)
+	r.db.Preload("Film").Preload("User").First(&transaction, ID)
 
 	// If is different & Status is "success" decrement product quantity
 
