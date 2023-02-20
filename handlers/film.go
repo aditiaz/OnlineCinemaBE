@@ -6,11 +6,18 @@ import (
 	dto "finaltaskbe/dto/result"
 	"finaltaskbe/models"
 	"finaltaskbe/repositories"
+	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
+
+	"context"
+
+	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 )
 
 type handlerFilm struct {
@@ -74,9 +81,19 @@ func (h *handlerFilm) Addfilm(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
 
 	dataContext := r.Context().Value("dataFile")
-	filename := dataContext.(string)
+	filepath := dataContext.(string)
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "uploads"})
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 	film := models.Film{
 		Title:       request.Title,
@@ -84,7 +101,7 @@ func (h *handlerFilm) Addfilm(w http.ResponseWriter, r *http.Request) {
 		Price:       request.Price,
 		FilmUrl:     request.FilmUrl,
 		Description: request.Description,
-		Thumbnail:   filename,
+		Thumbnail:   resp.SecureURL,
 	}
 
 	data, err := h.FilmRepository.AddFilm(film)

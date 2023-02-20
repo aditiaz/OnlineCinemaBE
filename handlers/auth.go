@@ -61,6 +61,7 @@ func (h *handlerAuth) Register(w http.ResponseWriter, r *http.Request) {
 		Fullname: request.Fullname,
 		Email:    request.Email,
 		Password: password,
+		Phone:    request.Phone,
 	}
 
 	data, err := h.AuthRepository.Register(user)

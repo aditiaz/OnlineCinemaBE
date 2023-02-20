@@ -99,6 +99,7 @@ func (h *handlertransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 
 	transaction := models.Transaction{
 		Status:    request.Status,
+		Title:     request.Title,
 		Price:     request.Price,
 		OrderDate: request.OrderDate,
 		UserID:    request.UserID,
