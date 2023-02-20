@@ -9,8 +9,6 @@ import (
 	"log"
 	"net/http"
 
-	// "os"
-
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -39,6 +37,6 @@ func main() {
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
 	fmt.Println("Server is running on 5000")
-	http.ListenAndServe("localhost:5000", handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
+	http.ListenAndServe(":", handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 
 }
