@@ -9,6 +9,8 @@ import (
 	"log"
 	"net/http"
 
+	"os"
+
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -21,6 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	var port = os.Getenv("SERVER_PORT")
 
 	mysql.DatabaseInit()
 
@@ -37,6 +40,6 @@ func main() {
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
 	fmt.Println("Server is running on 5000")
-	http.ListenAndServe(":", handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
+	http.ListenAndServe(":"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 
 }
