@@ -21,7 +21,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	var port = 5000
+	var port = "5000"
 
 	mysql.DatabaseInit()
 
