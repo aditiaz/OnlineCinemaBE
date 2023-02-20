@@ -4,6 +4,7 @@ import (
 	"finaltaskbe/database"
 	"finaltaskbe/pkg/mysql"
 	"fmt"
+	"os"
 
 	"finaltaskbe/routes"
 	"log"
@@ -21,7 +22,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	var port = "5000"
+
+	var port = os.Getenv("PORT")
 
 	mysql.DatabaseInit()
 
