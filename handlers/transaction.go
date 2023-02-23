@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/mux"
 	"github.com/midtrans/midtrans-go"
 	"github.com/midtrans/midtrans-go/coreapi"
@@ -69,6 +70,9 @@ func (h *handlertransaction) GetTransaction(w http.ResponseWriter, r *http.Reque
 func (h *handlertransaction) CreateTransaction(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
+	// id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+	userId := int(userInfo["id"].(float64))
 
 	request := new(transactiondto.CreateTransactionRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
@@ -102,7 +106,7 @@ func (h *handlertransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		Title:     request.Title,
 		Price:     request.Price,
 		OrderDate: request.OrderDate,
-		UserID:    request.UserID,
+		UserID:    userId,
 		User:      request.User,
 		FilmID:    request.FilmID,
 		Film:      request.Film,
