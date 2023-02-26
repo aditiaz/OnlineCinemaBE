@@ -9,7 +9,7 @@ type Transaction struct {
 	UserID    int                  `json:"user_id"`
 	User      UsersProfileResponse `json:"user" gorm:"foreignKey:UserID"`
 	FilmID    int                  `json:"film_id"`
-	Film      Film                 `json:"film"`
+	Film      Film                 `json:"film" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 func (Transaction) TableName() string {
